@@ -1,3 +1,5 @@
+import randomColors from "./rndm-colors.js";
+
 const d = document,
   $numQ = d.getElementById("num-qstn"),
   $category = d.getElementById("category"),
@@ -5,7 +7,8 @@ const d = document,
   $triviaType = d.getElementById("trivia-type"),
   $formTrivia = d.querySelector(".form-trivia"),
   $formCard = d.querySelector(".main-card"),
-  $cardQ = d.querySelector(".card");
+  $cardQ = d.querySelector(".card"),
+  $timer = d.querySelector(".timer");
 
 let triviaData,
   triviaPosition = 0,
@@ -22,8 +25,6 @@ const getURL = (e) => {
       let result = await fetch(url),
         jsonData = await result.json();
       triviaData = jsonData.results;
-      console.log(triviaData);
-
       showData();
       d.addEventListener("click", buttonSelect);
     } catch (error) {
@@ -36,6 +37,8 @@ const getURL = (e) => {
 
 //Mostrar trivia en el DOM
 const showData = () => {
+  tempo();
+
   //Cambiando de cards
   $formCard.style.display = "none";
   $cardQ.style.display = "flex";
@@ -119,14 +122,20 @@ const buttonSelect = (e) => {
       });
 
       $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
-      $cardCategory.textContent = "Triviando Ando";
+      $cardQuestion.classList.add("rndm-colors");
+      $cardCategory.textContent = '"TRIVIANDO ANDO"';
+      $cardCategory.classList.add("rndm-colors");
       $cardDificulty.textContent = "Push the button to play again";
+      $cardDificulty.classList.add("rndm-colors");
       $ans1.textContent = "Play Again";
       $ans2.style.display = "none";
       $ans3.style.display = "none";
       $ans4.style.display = "none";
       $gridBtns.style.display = "flex";
       $gridBtns.style.justifyContent = "center";
+      $timer.style.display = "none";
+
+      randomColors(".rndm-colors");
     }
   } else {
     if (triviaPosition < triviaData.length - 1) {
@@ -153,15 +162,70 @@ const buttonSelect = (e) => {
       });
 
       $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
-      $cardCategory.textContent = "Triviando Ando";
+      $cardQuestion.classList.add("rndm-colors");
+      $cardCategory.textContent = '"TRIVIANDO ANDO"';
+      $cardCategory.classList.add("rndm-colors");
       $cardDificulty.textContent = "Push the button to play again";
+      $cardDificulty.classList.add("rndm-colors");
       $ans1.textContent = "Play Again";
       $ans2.style.display = "none";
       $ans3.style.display = "none";
       $ans4.style.display = "none";
       $gridBtns.style.display = "flex";
+      $gridBtns.style.justifyContent = "center";
+      $timer.style.display = "none";
+
+      randomColors(".rndm-colors");
     }
   }
+};
+
+//Temporizador
+const tempo = () => {
+  let s = 5,
+    timer = setInterval(() => {
+      $timer.textContent = s;
+      s--;
+      if (s < 0) {
+        triviaPosition++;
+        showData();
+        clearInterval(timer);
+      } else if (triviaPosition > triviaData.length - 1) {
+        clearInterval(timer);
+
+        $formCard.style.display = "none";
+        $cardQ.style.display = "flex";
+
+        const $cardQuestion = $cardQ.querySelector(".info-q p"),
+          $cardCategory = $cardQ.querySelector(".category"),
+          $cardDificulty = $cardQ.querySelector(".dificulty"),
+          $ans1 = $cardQ.querySelector(".grid-btns #btn1"),
+          $ans2 = $cardQ.querySelector(".grid-btns #btn2"),
+          $ans3 = $cardQ.querySelector(".grid-btns #btn3"),
+          $ans4 = $cardQ.querySelector(".grid-btns #btn4"),
+          $gridBtns = $cardQ.querySelector(".grid-btns");
+
+        $ans1.addEventListener("click", (e) => {
+          location.reload();
+        });
+
+        $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
+        $cardQuestion.classList.add("rndm-colors");
+        $cardCategory.textContent = '"TRIVIANDO ANDO"';
+        $cardCategory.classList.add("rndm-colors");
+        $cardDificulty.textContent = "Push the button to play again";
+        $cardDificulty.classList.add("rndm-colors");
+        $ans1.textContent = "Play Again";
+        $ans2.style.display = "none";
+        $ans3.style.display = "none";
+        $ans4.style.display = "none";
+        $gridBtns.style.display = "flex";
+        $gridBtns.style.justifyContent = "center";
+        $timer.style.display = "none";
+
+        randomColors(".rndm-colors");
+      }
+    }, 1000);
 };
 
 $formTrivia.addEventListener("submit", getURL);

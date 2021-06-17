@@ -250,6 +250,29 @@ option {
   cursor: pointer;
 }
 
+.timer {
+  margin-top: 5rem;
+  padding: 0.5rem 1rem;
+  border: dotted 0.2rem var(--button2);
+  font-size: 2rem;
+  font-weight: bold;
+  animation-name: heart;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes heart {
+  0% {
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
 /************************** Media Query  ******************************/
 
 /* Main Card */
@@ -327,7 +350,7 @@ option {
   .inner-card > .info-q {
     display: grid;
     gap: 0;
-    grid-template-columns: repeat(2, 0.5fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
     margin-bottom: 1.5rem;
   }

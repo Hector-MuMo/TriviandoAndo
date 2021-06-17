@@ -5,9 +5,7 @@ const d = document,
   $triviaType = d.getElementById("trivia-type"),
   $formTrivia = d.querySelector(".form-trivia"),
   $formCard = d.querySelector(".main-card"),
-  $cardQ = d.querySelector(".card"),
-  $template = d.querySelector("template").content,
-  $fragment = d.createDocumentFragment();
+  $cardQ = d.querySelector(".card");
 
 let triviaData,
   triviaPosition = 0,
@@ -65,8 +63,15 @@ const showData = () => {
 
   /* Distribucion de preguntas */
   if (trivia.type === "boolean") {
-    $ans1.textContent = "True";
-    $ans2.textContent = "False";
+    if (trivia.correct_answer === "True") {
+      $ans1.textContent = trivia.correct_answer;
+      $ans2.textContent = "False";
+      counter++;
+    } else {
+      $ans1.textContent = "True";
+      $ans2.textContent = trivia.correct_answer;
+      counter++;
+    }
     $ans3.style.display = "none";
     $ans4.style.display = "none";
   } else {
@@ -106,7 +111,8 @@ const buttonSelect = (e) => {
         $ans1 = $cardQ.querySelector(".grid-btns #btn1"),
         $ans2 = $cardQ.querySelector(".grid-btns #btn2"),
         $ans3 = $cardQ.querySelector(".grid-btns #btn3"),
-        $ans4 = $cardQ.querySelector(".grid-btns #btn4");
+        $ans4 = $cardQ.querySelector(".grid-btns #btn4"),
+        $gridBtns = $cardQ.querySelector(".grid-btns");
 
       $ans1.addEventListener("click", (e) => {
         location.reload();
@@ -119,6 +125,8 @@ const buttonSelect = (e) => {
       $ans2.style.display = "none";
       $ans3.style.display = "none";
       $ans4.style.display = "none";
+      $gridBtns.style.display = "flex";
+      $gridBtns.style.justifyContent = "center";
     }
   } else {
     if (triviaPosition < triviaData.length - 1) {
@@ -137,7 +145,8 @@ const buttonSelect = (e) => {
         $ans1 = $cardQ.querySelector(".grid-btns #btn1"),
         $ans2 = $cardQ.querySelector(".grid-btns #btn2"),
         $ans3 = $cardQ.querySelector(".grid-btns #btn3"),
-        $ans4 = $cardQ.querySelector(".grid-btns #btn4");
+        $ans4 = $cardQ.querySelector(".grid-btns #btn4"),
+        $gridBtns = $cardQ.querySelector(".grid-btns");
 
       $ans1.addEventListener("click", (e) => {
         location.reload();
@@ -150,6 +159,7 @@ const buttonSelect = (e) => {
       $ans2.style.display = "none";
       $ans3.style.display = "none";
       $ans4.style.display = "none";
+      $gridBtns.style.display = "flex";
     }
   }
 };

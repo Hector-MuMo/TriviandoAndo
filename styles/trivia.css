@@ -161,7 +161,7 @@ option {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 7rem 10rem;
+  grid-template-rows: 1fr 1fr;
   margin-bottom: 3rem;
 }
 
@@ -169,25 +169,60 @@ option {
   background-color: #77acf1;
   color: var(--letters);
   font-size: 2rem;
+  font-weight: bold;
   padding: 1rem;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
-  transform: rotate(-10deg);
+  animation-name: category;
+  animation-duration: 0.5s;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in;
+}
+
+@keyframes category {
+  0% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(-5deg);
+  }
 }
 
 .inner-card > .info-q > .dificulty {
   color: var(--white);
   font-size: 2rem;
+  font-weight: bold;
   padding: 1rem;
   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
-  transform: rotate(10deg);
+  animation-name: difficulty;
+  animation-duration: 0.5s;
+  animation-delay: 0;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in;
+}
+
+@keyframes difficulty {
+  0% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(5deg);
+  }
 }
 
 .inner-card > .info-q > p {
   grid-column: 1 / span 2;
   font-size: 2rem;
   margin-top: 3rem;
+  padding: 1rem;
+  background-color: rgba(120, 66, 18, 0.4);
+  color: rgba(33, 47, 60, 0.8);
   border-radius: 1rem;
   text-align: center;
 }
@@ -213,4 +248,117 @@ option {
   background-color: var(--button2);
   color: var(--letters);
   cursor: pointer;
+}
+
+/************************** Media Query  ******************************/
+
+/* Main Card */
+@media screen and (max-width: 700px) {
+  main {
+    height: auto;
+  }
+
+  .main-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .main-card > .dotted {
+    background-color: transparent;
+    border: dotted 0.5rem var(--button2);
+    border-radius: 1rem;
+    animation-name: dotted;
+    animation-duration: 0.5s;
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in;
+  }
+
+  @keyframes dotted {
+    0% {
+      transform: translateY(-10%);
+    }
+
+    100% {
+      transform: translateY(10%);
+    }
+  }
+
+  .main-card > .dotted > h1 {
+    display: inline-block;
+    font-family: "Sansita Swashed", cursive;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    color: var(--letters);
+  }
+
+  .form-trivia > label {
+    font-size: 1.8rem;
+    color: var(--white);
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .form-trivia > input {
+    width: 80%;
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    outline: none;
+  }
+
+  .form-trivia > select,
+  option {
+    width: 80%;
+    border-radius: 1rem;
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    outline: none;
+  }
+
+  /* Questions Cards */
+  .inner-card > .info-q {
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(2, 0.5fr);
+    grid-template-rows: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .inner-card > .info-q > .category {
+    font-size: 1.8rem;
+    padding: 0.5;
+  }
+
+  .inner-card > .info-q > p {
+    width: 90%;
+    font-size: 1.6rem;
+    margin: 2rem auto;
+    padding: 1rem 0;
+  }
+
+  .inner-card > .grid-btns {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .grid-btns > button {
+    font-size: 1.5rem;
+    max-width: 20rem;
+    padding: 0.5rem;
+    background-color: var(--button1);
+    color: var(--white);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
 }

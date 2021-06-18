@@ -27,6 +27,8 @@ const getURL = (e) => {
         jsonData = await result.json();
       triviaData = jsonData.results;
 
+      console.log(triviaData);
+
       showData();
       d.addEventListener("click", (e) => {
         if (e.target.matches("button")) {
@@ -57,7 +59,7 @@ const showData = () => {
     $ans4 = $cardQ.querySelector(".grid-btns #btn4");
 
   let trivia = triviaData[triviaPosition];
-
+  console.log(triviaData);
   /* Error 01: No existen suficientes preguntas*/
   if (trivia === undefined) {
     $cardQuestion.textContent =
@@ -152,9 +154,6 @@ const buttonSelect = (e) => {
   } else {
     if (triviaPosition < triviaData.length - 1) {
       triviaPosition++;
-      console.log(counter);
-      console.log(triviaPosition);
-      console.log(triviaData.length);
       showData();
     } else {
       $formCard.style.display = "none";
@@ -197,11 +196,7 @@ const tempo = () => {
   timer = setInterval(() => {
     $timer.textContent = s;
     s--;
-    if (s < 0) {
-      triviaPosition++;
-      showData();
-      clearInterval(timer);
-    } else if (triviaPosition > triviaData.length - 1) {
+    if (s < 0 && triviaPosition === triviaData.length - 1) {
       clearInterval(timer);
 
       $formCard.style.display = "none";
@@ -235,6 +230,12 @@ const tempo = () => {
       $timer.style.display = "none";
 
       randomColors(".rndm-colors");
+    } else if (s < 0 && triviaPosition < triviaData.length - 1) {
+      clearInterval(timer);
+      triviaPosition++;
+      console.log(triviaPosition);
+      console.log(triviaData.length - 1);
+      showData();
     }
   }, 1000);
 };

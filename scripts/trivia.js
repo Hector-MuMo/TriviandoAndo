@@ -12,7 +12,8 @@ const d = document,
 
 let triviaData,
   triviaPosition = 0,
-  counter = 0;
+  counter = 0,
+  timer;
 
 //Obtener Trivia
 const getURL = (e) => {
@@ -25,8 +26,14 @@ const getURL = (e) => {
       let result = await fetch(url),
         jsonData = await result.json();
       triviaData = jsonData.results;
+
       showData();
-      d.addEventListener("click", buttonSelect);
+      d.addEventListener("click", (e) => {
+        if (e.target.matches("button")) {
+          clearTimeout(timer);
+          buttonSelect(e);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -37,8 +44,6 @@ const getURL = (e) => {
 
 //Mostrar trivia en el DOM
 const showData = () => {
-  tempo();
-
   //Cambiando de cards
   $formCard.style.display = "none";
   $cardQ.style.display = "flex";
@@ -52,6 +57,12 @@ const showData = () => {
     $ans4 = $cardQ.querySelector(".grid-btns #btn4");
 
   let trivia = triviaData[triviaPosition];
+
+  /* Error 01: No existen suficientes preguntas*/
+  if (trivia === undefined) {
+    $cardQuestion.textContent =
+      "La base de datos no tiene las suficientes preguntas para tu elección 💔 ...reinicia la pagina 😢";
+  }
 
   $cardQuestion.textContent = trivia.question;
   $cardCategory.textContent = `Category: ${trivia.category}`;
@@ -92,6 +103,8 @@ const showData = () => {
       j++;
     }
   }
+
+  tempo();
 };
 
 //EventoClick
@@ -122,7 +135,6 @@ const buttonSelect = (e) => {
       });
 
       $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
-      $cardQuestion.classList.add("rndm-colors");
       $cardCategory.textContent = '"TRIVIANDO ANDO"';
       $cardCategory.classList.add("rndm-colors");
       $cardDificulty.textContent = "Push the button to play again";
@@ -162,7 +174,6 @@ const buttonSelect = (e) => {
       });
 
       $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
-      $cardQuestion.classList.add("rndm-colors");
       $cardCategory.textContent = '"TRIVIANDO ANDO"';
       $cardCategory.classList.add("rndm-colors");
       $cardDificulty.textContent = "Push the button to play again";
@@ -182,50 +193,50 @@ const buttonSelect = (e) => {
 
 //Temporizador
 const tempo = () => {
-  let s = 5,
-    timer = setInterval(() => {
-      $timer.textContent = s;
-      s--;
-      if (s < 0) {
-        triviaPosition++;
-        showData();
-        clearInterval(timer);
-      } else if (triviaPosition > triviaData.length - 1) {
-        clearInterval(timer);
+  let s = 30;
+  timer = setInterval(() => {
+    $timer.textContent = s;
+    s--;
+    if (s < 0) {
+      triviaPosition++;
+      showData();
+      clearInterval(timer);
+    } else if (triviaPosition > triviaData.length - 1) {
+      clearInterval(timer);
 
-        $formCard.style.display = "none";
-        $cardQ.style.display = "flex";
+      $formCard.style.display = "none";
+      $cardQ.style.display = "flex";
 
-        const $cardQuestion = $cardQ.querySelector(".info-q p"),
-          $cardCategory = $cardQ.querySelector(".category"),
-          $cardDificulty = $cardQ.querySelector(".dificulty"),
-          $ans1 = $cardQ.querySelector(".grid-btns #btn1"),
-          $ans2 = $cardQ.querySelector(".grid-btns #btn2"),
-          $ans3 = $cardQ.querySelector(".grid-btns #btn3"),
-          $ans4 = $cardQ.querySelector(".grid-btns #btn4"),
-          $gridBtns = $cardQ.querySelector(".grid-btns");
+      const $cardQuestion = $cardQ.querySelector(".info-q p"),
+        $cardCategory = $cardQ.querySelector(".category"),
+        $cardDificulty = $cardQ.querySelector(".dificulty"),
+        $ans1 = $cardQ.querySelector(".grid-btns #btn1"),
+        $ans2 = $cardQ.querySelector(".grid-btns #btn2"),
+        $ans3 = $cardQ.querySelector(".grid-btns #btn3"),
+        $ans4 = $cardQ.querySelector(".grid-btns #btn4"),
+        $gridBtns = $cardQ.querySelector(".grid-btns");
 
-        $ans1.addEventListener("click", (e) => {
-          location.reload();
-        });
+      $ans1.addEventListener("click", (e) => {
+        location.reload();
+      });
 
-        $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
-        $cardQuestion.classList.add("rndm-colors");
-        $cardCategory.textContent = '"TRIVIANDO ANDO"';
-        $cardCategory.classList.add("rndm-colors");
-        $cardDificulty.textContent = "Push the button to play again";
-        $cardDificulty.classList.add("rndm-colors");
-        $ans1.textContent = "Play Again";
-        $ans2.style.display = "none";
-        $ans3.style.display = "none";
-        $ans4.style.display = "none";
-        $gridBtns.style.display = "flex";
-        $gridBtns.style.justifyContent = "center";
-        $timer.style.display = "none";
+      $cardQuestion.textContent = `Your score is ${counter}/${triviaData.length}`;
+      $cardQuestion.classList.add("rndm-colors");
+      $cardCategory.textContent = '"TRIVIANDO ANDO"';
+      $cardCategory.classList.add("rndm-colors");
+      $cardDificulty.textContent = "Push the button to play again";
+      $cardDificulty.classList.add("rndm-colors");
+      $ans1.textContent = "Play Again";
+      $ans2.style.display = "none";
+      $ans3.style.display = "none";
+      $ans4.style.display = "none";
+      $gridBtns.style.display = "flex";
+      $gridBtns.style.justifyContent = "center";
+      $timer.style.display = "none";
 
-        randomColors(".rndm-colors");
-      }
-    }, 1000);
+      randomColors(".rndm-colors");
+    }
+  }, 1000);
 };
 
 $formTrivia.addEventListener("submit", getURL);

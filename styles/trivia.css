@@ -30,8 +30,8 @@ body {
 main {
   position: relative;
   width: 100rem;
-  height: 46rem;
-  margin: 0 2rem;
+  height: auto;
+  margin: 2rem;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -155,6 +155,7 @@ option {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  margin: 2rem;
 }
 
 .inner-card > .info-q {
@@ -219,6 +220,7 @@ option {
 .inner-card > .info-q > p {
   grid-column: 1 / span 2;
   font-size: 2rem;
+  font-weight: bolder;
   margin-top: 3rem;
   padding: 1rem;
   background-color: rgba(120, 66, 18, 0.4);

@@ -3,7 +3,7 @@ const d = document;
 export default function randomColors(element) {
   const $colorBoxes = d.querySelectorAll(element);
 
-  let randomNumber = setInterval(() => {
+  setInterval(() => {
     function getRandomColor() {
       let letters = "0123456789ABCDEF",
         color = "#";
@@ -14,5 +14,5 @@ export default function randomColors(element) {
     }
 
     $colorBoxes.forEach((e) => (e.style.background = `${getRandomColor()}`));
-  }, 1000);
+  }, 2000);
 }
